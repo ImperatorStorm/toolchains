@@ -20,26 +20,34 @@ jobs:
     - name: Build
       run: |
         echo ${{ github.event.name }}
-        pacman -Syu --noconfirm --needed base-devel sudo git fd
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
         BASEDIR="$PWD"
         cd ${___TARGETARCH}/linux-api-headers
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../glibc
-        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck --nodeps
         cd ../binutils
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../gcc
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../glibc
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
         cd ../binutils
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
         cd ../gcc
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
         cd ../gdb
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
         cd ../
         fd --glob '*tar.zst' -X mv {} ../
