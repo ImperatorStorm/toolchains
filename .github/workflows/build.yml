@@ -34,4 +34,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: packages
-          path: /opt/*
+          path: /opt/**
+    - name: Upload logfile
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: logfile
+        path: build.log**
