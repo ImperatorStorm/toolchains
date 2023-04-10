@@ -25,6 +25,7 @@ jobs:
         echo ${{ github.event.name }}
         pacman -Syu --noconfirm --needed base-devel crosstool-ng sudo git
         useradd builder -m
+        chown -R builder:root /tarballs/
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
         BASEDIR="$PWD"
