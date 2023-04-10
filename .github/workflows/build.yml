@@ -31,11 +31,13 @@ jobs:
         BASEDIR="$PWD"
         mv ppc64.config .config
         sudo -u builder V=2 ct-ng build
+        cd /home/builder/x-tools/
+        tar cf --zstd ppc64-gcc.tar.zst *
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
       with:
           name: packages
-          path: /home/builder/x-tools/**
+          path: /home/builder/x-tools/ppc64-gcc.tar.zst
     - name: Upload logfile
       uses: actions/upload-artifact@v3
       if: failure()
