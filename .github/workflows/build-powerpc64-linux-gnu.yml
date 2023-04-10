@@ -5,9 +5,9 @@ env:
   ___TARGETARCH: "powerpc64-linux-gnu"
 on:
   push:
-  paths:
-      - "powerpc64-linux-gnu/**"
-      -  ".github/workflows/build-powerpc64-linux-gnu.yml"
+    paths:
+        - "powerpc64-linux-gnu/**"
+        -  ".github/workflows/build-powerpc64-linux-gnu.yml"
   workflow_dispatch:
 
 jobs:
