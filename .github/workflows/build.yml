@@ -14,12 +14,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Build
     - name: Cache tarballs
       uses: actions/cache@v3
       with:
         path: /tarballs/crosstool-ng/src/
         key: ppc64-tarballs
+    - name: Build
       run: |
         echo ${{ github.event.name }}
         pacman -Syu --noconfirm --needed base-devel crosstool-ng sudo git
