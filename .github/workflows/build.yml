@@ -30,12 +30,12 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         mv ppc64.config .config
-        V=2 sudo -Eu builder ct-ng build
+        sudo -Eu builder V=2 ct-ng build
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
       with:
           name: packages
-          path: /opt/**
+          path: /home/builder/x-tools/**
     - name: Upload logfile
       uses: actions/upload-artifact@v3
       if: failure()
