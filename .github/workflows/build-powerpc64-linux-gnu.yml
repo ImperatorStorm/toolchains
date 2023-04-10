@@ -28,28 +28,25 @@ jobs:
         cd ${___TARGETARCH}/linux-api-headers
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
-        cd ../gcc
+        cd ../binutils
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
+        cd ../gcc-stage1
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck --nodeps
         cd ../glibc-bootstrap-headers
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
-        cd ../gcc
+        cd ../gcc-stage2
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck --nodeps
         cd ../glibc
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
-        cd ../binutils
-        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
-        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../gcc
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../glibc
-        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
-        sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
-        cd ../binutils
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
         cd ../gcc
@@ -59,6 +56,7 @@ jobs:
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
         cd ../
+        rm -rf gcc-stage1 gcc-stage2 glibc-headers
         fd --glob '*tar.zst' -X mv {} ../
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
