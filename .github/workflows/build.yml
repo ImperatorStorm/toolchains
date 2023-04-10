@@ -32,13 +32,13 @@ jobs:
         mv ppc64.config .config
         sudo -u builder V=2 ct-ng build
         cd /home/builder/x-tools/
-        tar cf --zstd ppc64-gcc.tar.zst *
+        tar --zstd --exclude=sysroot --exclude=build.log cf ppc64-gcc.tar.zst *
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
       with:
-          name: packages
+          name: toolchain-ppc64
           path: /home/builder/x-tools/ppc64-gcc.tar.zst
-    - name: Upload logfile
+    - name: Upload logfile on fail
       uses: actions/upload-artifact@v3
       if: failure()
       with:
