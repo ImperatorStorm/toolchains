@@ -1,0 +1,50 @@
+name: build-toolchain-powerpc64-linux-gnu
+
+env:
+  GPG_TTY: $(tty)
+  ___TARGETARCH: "powerpc64-linux-gnu"
+on:
+  push:
+  paths:
+      - "powerpc64-linux-gnu/**"
+      -  ".github/workflows/build-powerpc64-linux-gnu.yml"
+  workflow_dispatch:
+
+jobs:
+  toolchainbuild:
+    runs-on: ubuntu-latest
+    container: archlinux/archlinux:base-devel
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      run: |
+        echo ${{ github.event.name }}
+        pacman -Syu --noconfirm --needed base-devel sudo git fd
+        useradd builder -m
+        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        chmod -R a+rw .
+        BASEDIR="$PWD"
+        cd ${___TARGETARCH}/linux-api-headers
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
+        cd ../glibc
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
+        cd ../binutils
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
+        cd ../gcc
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
+        cd ../glibc
+        sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
+        cd ../binutils
+        sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
+        cd ../gcc
+        sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
+        cd ../gdb
+        sudo -u builder makepkg -fsir --noconfirm --skippgpcheck
+        cd ../
+        fd --glob '*tar.zst' -X mv {} ../
+    - name: Upload Toolchain
+      uses: actions/upload-artifact@v3
+      with:
+          name: toolchain-powerpc64-linux-gnu
+          path: "**.tar.zst"
