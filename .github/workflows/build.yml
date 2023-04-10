@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pkgbuild:
+  toolchainbuild:
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
@@ -17,9 +17,13 @@ jobs:
     - name: Build
       run: |
         echo ${{ github.event.name }}
-        pacman -Syu --noconfirm base-devel crosstool-ng gnupg make
+        pacman -Syu --noconfirm --needed base-devel crosstool-ng sudo git
+        useradd builder -m
+        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        chmod -R a+rw .
+        BASEDIR="$PWD"
         mv ppc64.config .config
-        ct-ng build
+        sudo -u builder ct-ng build
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
       with:
