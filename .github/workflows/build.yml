@@ -30,7 +30,7 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         mv ppc64.config .config
-        sudo -Eu builder V=2 ct-ng build
+        sudo -u builder V=2 ct-ng build
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
       with:
