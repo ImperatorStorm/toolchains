@@ -21,6 +21,7 @@ jobs:
         key: ppc64-tarballs
     - name: Build
       run: |
+        mkdir /tarballs/crosstool-ng/src/
         echo ${{ github.event.name }}
         pacman -Syu --noconfirm --needed base-devel crosstool-ng sudo git
         useradd builder -m
