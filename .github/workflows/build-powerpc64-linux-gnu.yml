@@ -28,9 +28,18 @@ jobs:
         cd ${___TARGETARCH}/linux-api-headers
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
-        cd ../glibc
+        cd ../gcc
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck --nodeps
+        cd ../glibc-bootstrap-headers
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
+        cd ../gcc
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck --nodeps
+        cd ../glibc
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
+        sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../binutils
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
