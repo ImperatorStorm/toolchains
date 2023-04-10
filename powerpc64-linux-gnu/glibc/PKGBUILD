@@ -10,6 +10,7 @@ arch=(any)
 url='https://www.gnu.org/software/libc/'
 license=('GPL' 'LGPL')
 depends=($_target-gcc $_target-linux-api-headers)
+conflicts=($_target-glibc-headers)
 makedepends=(python)
 options=(!buildflags !strip staticlibs)
 source=(https://ftp.gnu.org/gnu/libc/glibc-$pkgver.tar.xz{,.sig})
@@ -70,5 +71,5 @@ package() {
 
   make install_root="$pkgdir"/usr/$_target install
 
-  rm -r "$pkgdir"/usr/$_target/{etc,usr/share,var}
+  rm -rf "$pkgdir"/usr/$_target/{etc,usr/share,var}
 }
