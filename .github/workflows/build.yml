@@ -32,7 +32,7 @@ jobs:
         mv ppc64.config .config
         sudo -u builder V=2 ct-ng build
         cd /home/builder/x-tools/
-        tar --zstd --exclude=sysroot --exclude=build.log cf ppc64-gcc.tar.zst *
+        tar --zstd --exclude=sysroot --exclude=build.log -cf ppc64-gcc.tar.zst *
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
       with:
