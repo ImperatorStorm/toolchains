@@ -48,7 +48,10 @@ build() {
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
   CFLAGS=${CFLAGS/-pipe/}
   CXXFLAGS=${CXXFLAGS/-pipe/}
-
+  # build failure
+  CFLAGS=${CFLAGS/-Werror=format-security/}
+  CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
+  
   "$srcdir/gcc/configure" --prefix=/usr \
       --program-prefix=${_target}- \
       --with-local-prefix=/usr/${_target} \

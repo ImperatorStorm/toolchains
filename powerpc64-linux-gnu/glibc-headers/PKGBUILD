@@ -62,6 +62,9 @@ build() {
 
   # remove fortify for building libraries
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
+  # build failure
+  CFLAGS=${CFLAGS/-Werror=format-security/}
+  CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
 
   export BUILD_CC=gcc
   export CC=${_target}-gcc
