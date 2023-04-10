@@ -15,6 +15,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Build
+    - name: Cache tarballs
+      uses: actions/cache@v3
+      with:
+        path: /tarballs/crosstool-ng/src/
+        key: ppc64-tarballs
       run: |
         echo ${{ github.event.name }}
         pacman -Syu --noconfirm --needed base-devel crosstool-ng sudo git
@@ -23,7 +28,7 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         mv ppc64.config .config
-        sudo -u builder ct-ng build >/dev/null & tail build.log
+        sudo -u builder ct-ng build
     - name: Upload Toolchain
       uses: actions/upload-artifact@v3
       with:
