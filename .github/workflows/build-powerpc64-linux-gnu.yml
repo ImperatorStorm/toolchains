@@ -39,7 +39,8 @@ jobs:
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../gcc-stage2
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
-        yes y | sudo -u builder makepkg -fsir --nocheck --skippgpcheck --nodeps
+        yes y | sudo -u builder makepkg -fsr --nocheck --skippgpcheck --nodeps
+        pacman -Udd *.tar.zst
         cd ../glibc
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         yes y | sudo -u builder makepkg -fsir --nocheck --skippgpcheck

@@ -11,6 +11,7 @@ url='https://www.gnu.org/software/libc/'
 license=('GPL' 'LGPL')
 depends=($_target-gcc $_target-linux-api-headers)
 conflicts=($_target-glibc-headers)
+provides=($_target-glibc-headers)
 makedepends=(python)
 options=(!buildflags !strip staticlibs)
 source=(https://ftp.gnu.org/gnu/libc/glibc-$pkgver.tar.xz{,.sig})
