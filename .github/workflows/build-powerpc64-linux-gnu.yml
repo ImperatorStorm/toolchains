@@ -6,6 +6,7 @@ env:
   SCCACHE_DIR: "/sccache/"
   C_COMPILER_LAUNCHER: "sccache"
   CXX_COMPILER_LAUNCHER: "sccache"
+  SCCACHE_GHA_ENABLED: on
 on:
   push:
     paths:
@@ -20,11 +21,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: sccache
-      uses: actions/cache@v3
+    - name: Configure sccache
+      uses: actions/github-script@v6
       with:
-        path: /sccache/
-        key: ppc64-arch-toolchain
+        script: |
+             core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
     - name: Build
       run: |
         echo ${{ github.event.name }}
