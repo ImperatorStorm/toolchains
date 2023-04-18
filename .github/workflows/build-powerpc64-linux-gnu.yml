@@ -3,6 +3,9 @@ name: build-toolchain-powerpc64-linux-gnu
 env:
   GPG_TTY: $(tty)
   ___TARGETARCH: "powerpc64-linux-gnu"
+  SCCACHE_DIR: "/sccache/"
+  C_COMPILER_LAUNCHER: "sccache"
+  CXX_COMPILER_LAUNCHER: "sccache"
 on:
   push:
     paths:
@@ -17,14 +20,20 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: sccache
+      uses: actions/cache@v3
+      with:
+        path: /sccache/
+        key: ppc64-arch-toolchain
     - name: Build
       run: |
         echo ${{ github.event.name }}
-        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
+        pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd sccache
+        mkdir -p $SCCACHE_DIR
+        echo CC="sccache gcc" >> /etc/makepkg.conf
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
-        BASEDIR="$PWD"
         cd ${___TARGETARCH}/linux-api-headers
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
@@ -39,9 +48,7 @@ jobs:
         sudo -u builder makepkg -fsir --noconfirm --nocheck --skippgpcheck
         cd ../gcc-stage2
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
-        yes y | sudo -u builder makepkg -fsr --nocheck --skippgpcheck --nodeps
-        pacman -Rns --noconfirm powerpc64-linux-gnu-gcc-stage1
-        pacman -Udd --noconfirm *.tar.zst
+        yes y | sudo -u builder makepkg -fsir --nocheck --skippgpcheck --nodeps
         cd ../glibc
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd
         yes y | sudo -u builder makepkg -fsir --nocheck --skippgpcheck
