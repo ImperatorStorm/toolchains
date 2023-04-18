@@ -29,7 +29,8 @@ build() {
     # enabling gold linker at i686 makes the install fail
     enable_gold='--enable-gold'
   fi
-
+  echo $CC
+  echo $CXX
   ./configure --target=$_target \
               --with-sysroot=/usr/$_target \
               --prefix=/usr \

@@ -31,6 +31,7 @@ jobs:
         pacman -Syu --noconfirm --needed base-devel sudo git fd xz ncurses expat python guile gdb-common mpfr libelf source-highlight libmpc zlib libisl zstd sccache
         mkdir -p $SCCACHE_DIR
         echo CC=\"sccache gcc\" >> /etc/makepkg.conf
+        echo CXX=\"sccache gcc\" >> /etc/makepkg.conf
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
