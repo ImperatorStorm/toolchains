@@ -51,7 +51,7 @@ build() {
   CFLAGS=${CFLAGS/-Werror=format-security/}
   CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
   
-  ${srcdir}/gcc/configure --prefix=/usr \
+  ${srcdir}/gcc-${pkgver}/configure --prefix=/usr \
       --program-prefix=${_target}- \
       --with-local-prefix=/usr/${_target} \
       --with-sysroot=/usr/${_target} \
