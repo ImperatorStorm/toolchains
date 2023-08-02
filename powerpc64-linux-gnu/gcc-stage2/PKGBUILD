@@ -26,7 +26,9 @@ source=(https://gcc.gnu.org/pub/gcc/releases/gcc-$pkgver/gcc-$pkgver.tar.xz{,.si
 sha256sums=('e275e76442a6067341a27f04c5c6b83d8613144004c0413528863dc6b5c743da'
             'SKIP'
             'a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504')
-validpgpkeys=(33C235A34C46AA3FFB293709A328C3A2C3C45C06) # Jakub Jelinek <jakub@redhat.com>
+validpgpkeys=(D3A93CAD751C2AF4F8C7AD516C35B99309B5FA62  # Jakub Jelinek <jakub@redhat.com>
+              33C235A34C46AA3FFB293709A328C3A2C3C45C06  # Jakub Jelinek <jakub@redhat.com>
+              13975A70E63C361C73AE69EF6EEB81F8981C74C7) # Richard Guenther <richard.guenther@gmail.com>
 
 prepare() {
   cd gcc-${pkgver}
@@ -55,7 +57,7 @@ build() {
   CFLAGS=${CFLAGS/-Werror=format-security/}
   CXXFLAGS=${CXXFLAGS/-Werror=format-security/}
 
-  {$srcdir}/gcc-${pkgver}/configure --prefix=/usr \
+  "$srcdir"/gcc-${pkgver}/configure --prefix=/usr \
       --program-prefix=${_target}- \
       --with-local-prefix=/usr/${_target} \
       --with-sysroot=/usr/${_target} \
