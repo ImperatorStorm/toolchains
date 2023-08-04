@@ -9,7 +9,7 @@
 _target="powerpc64-linux-gnu"
 pkgname=${_target}-glibc-headers
 pkgver=2.38
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU C Library headers (${_target})"
 arch=('any')
 url="http://www.gnu.org/software/libc/"
