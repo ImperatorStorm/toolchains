@@ -14,7 +14,8 @@ conflicts=($_target-glibc-headers)
 provides=($_target-glibc-headers)
 makedepends=(python)
 options=(!buildflags !strip staticlibs)
-source=(https://ftp.gnu.org/gnu/libc/glibc-$pkgver.tar.xz{,.sig})
+source=(https://ftp.gnu.org/gnu/libc/glibc-$pkgver.tar.xz{,.sig}
+        PATCH-nscd-Do-not-rebuild-getaddrinfo-bug-30709.patch)
 sha256sums=('fb82998998b2b29965467bc1b69d152e9c307d2cf301c9eafb4555b770ef3fd2'
             'SKIP')
 validpgpkeys=(7273542B39962DF7B299931416792B4EA25340F8  # "Carlos O'Donell <carlos@systemhalted.org>"
@@ -22,6 +23,8 @@ validpgpkeys=(7273542B39962DF7B299931416792B4EA25340F8  # "Carlos O'Donell <carl
 
 prepare() {
   mkdir -p glibc-build
+  cd glibc-$pkgver
+  patch -Np1 < ../PATCH-nscd-Do-not-rebuild-getaddrinfo-bug-30709.patch
 }
 
 build() {
