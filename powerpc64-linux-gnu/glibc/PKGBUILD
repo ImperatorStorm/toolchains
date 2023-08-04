@@ -17,7 +17,8 @@ options=(!buildflags !strip staticlibs)
 source=(https://ftp.gnu.org/gnu/libc/glibc-$pkgver.tar.xz{,.sig}
         PATCH-nscd-Do-not-rebuild-getaddrinfo-bug-30709.patch)
 sha256sums=('fb82998998b2b29965467bc1b69d152e9c307d2cf301c9eafb4555b770ef3fd2'
-            'SKIP')
+            'SKIP'
+            'e749a59ef980a77cf6433c87ed7b5020d65c7a3e2900c577b8a7880386ec670f')
 validpgpkeys=(7273542B39962DF7B299931416792B4EA25340F8  # "Carlos O'Donell <carlos@systemhalted.org>"
               BC7C7372637EC10C57D7AA6579C43DFBF1CF2187) # Siddhesh Poyarekar
 
@@ -35,9 +36,8 @@ build() {
   echo 'sbindir=/bin' >> configparms
   echo 'rootsbindir=/bin' >> configparms
 
-  # remove hardening options for building libraries
-  export CFLAGS="-U_FORTIFY_SOURCE -mbig-endian -O2"
-  export CPPFLAGS="-U_FORTIFY_SOURCE -O2"
+  export CFLAGS="-Wp,-D_FORTIFY_SOURCE=2 -mbig-endian -O2"
+  export CPPFLAGS="-Wp,-D_FORTIFY_SOURCE=2 -O2"
   unset LD_LIBRARY_PATH
 
   export BUILD_CC=gcc
