@@ -63,7 +63,7 @@ build() {
   export AR=${_target}-ar
   export RANLIB=${_target}-ranlib
 
-  "$srcdir/glibc/configure" \
+  ${srcdir}/glibc-$pkgver/configure \
       --libdir=/lib \
       --libexecdir=/lib \
       ${_configure_flags[@]} \
