@@ -36,10 +36,9 @@ build() {
   echo 'sbindir=/bin' >> configparms
   echo 'rootsbindir=/bin' >> configparms
 
-  export CFLAGS="-Wp,-D_FORTIFY_SOURCE=2 -mbig-endian -O2"
-  export CPPFLAGS="-Wp,-D_FORTIFY_SOURCE=2 -O2"
+  export CFLAGS="-U_FORTIFY_SOURCE -mbig-endian -O2"
+  export CPPFLAGS="-U_FORTIFY_SOURCE -O2"
   unset LD_LIBRARY_PATH
-
   export BUILD_CC=gcc
   export CC=${_target}-gcc
   export CXX=${_target}-g++
