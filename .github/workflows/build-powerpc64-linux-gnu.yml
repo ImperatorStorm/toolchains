@@ -71,7 +71,7 @@ jobs:
         rm -rf gcc-stage1 gcc-stage2 glibc-headers
         fd --glob '*tar.zst' -X mv {} ../
     - name: Upload Toolchain
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: toolchain-powerpc64-linux-gnu
           path: "**.tar.zst"
